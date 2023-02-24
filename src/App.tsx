@@ -21,48 +21,47 @@ export default function App() {
     <>
       <NavigationBar headline="Haidi Chen's Git Actions Workflows" />
 
-      <Container>
-        <Grid container sx={{ marginLeft: 3 }} spacing={4}>
-          <Grid>
-            <Stack spacing={1}>
-              <RepositoryCard repositoryName="SimpleTicTacToe" owner="haidichen" />
-              <RepositoryCard repositoryName="HiPipeline" owner="haidichen"/>
-              <RepositoryCard repositoryName="Extractor" owner="haidichen"/>
-            </Stack>
-          </Grid>
-
-          <Grid>
-            <Button variant="outlined">
-              <Typography sx={{ p: 2 }}>Auto build status : on
-              </Typography>
-            </Button>
-          </Grid>
-
-          <Grid>
-              <Card sx={{ minWidth: 240, background: "#e0ffff" }}>
-                <CardContent>
-                  <Typography variant="h5">Build</Typography>
-                  <hr />
-                  <List disablePadding>
-                    <ListItem disablePadding>
-                      <ListItemText>
-                        status :
-                        <Button size="small" color="success">
-                          succeeded
-                        </Button>
-                      </ListItemText>
-                    </ListItem>
-                    <ListItem disablePadding>
-                      <ListItemText>
-                        datetime : 3 min ago
-                      </ListItemText>
-                    </ListItem>
-                  </List>
-                </CardContent>
-              </Card>
-          </Grid>
+      <Grid container sx={{ marginLeft: 3 }} spacing={4}>
+        <Grid>
+          <Stack spacing={1}>
+            <RepositoryCard repositoryName="SimpleTicTacToe" owner="haidichen" />
+            <RepositoryCard repositoryName="HiPipeline" owner="haidichen"/>
+            <RepositoryCard repositoryName="Extractor" owner="haidichen"/>
+            <RepositoryCard repositoryName="Payroll" owner="haidichen"/>
+          </Stack>
         </Grid>
-      </Container>
+
+        <Grid>
+          <Button variant="outlined">
+            <Typography sx={{ p: 2 }}>Auto build status : on
+            </Typography>
+          </Button>
+        </Grid>
+
+        <Grid>
+          <Card sx={{ minWidth: 240, background: "#e0ffff" }}>
+            <CardContent>
+              <Typography variant="h5">Build</Typography>
+              <hr />
+              <List disablePadding>
+                <ListItem disablePadding>
+                  <ListItemText>
+                    status :
+                    <Button size="small" color="success">
+                      succeeded
+                    </Button>
+                  </ListItemText>
+                </ListItem>
+                <ListItem disablePadding>
+                  <ListItemText>
+                    datetime : 3 min ago
+                  </ListItemText>
+                </ListItem>
+              </List>
+            </CardContent>
+          </Card>
+        </Grid>
+      </Grid>
     </>
   );
 }

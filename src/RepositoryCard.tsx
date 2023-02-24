@@ -3,7 +3,6 @@ import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CommitIcon from '@mui/icons-material/Commit';
-import GitHubIcon from '@mui/icons-material/GitHub';
 import Grid from '@mui/material/Grid';
 import Link from '@mui/material/Link';
 import List from '@mui/material/List';
@@ -13,6 +12,8 @@ import Typography from '@mui/material/Typography';
 
 import GitClient from './GitClient';
 
+
+const MAX_COMMIT_MSG_LEN = 35;
 
 const gitClient = new GitClient();
 
@@ -24,8 +25,9 @@ interface RepositoryCardProperties {
 export default function RepositoryCard(props: RepositoryCardProperties) {
 
   const repoName = props.repositoryName;
+  const owner = props.owner;
 
-  gitClient.getRepositoryDetails(repoName).then((repoDetails) => {
+  gitClient.getRepositoryDetails(owner, repoName).then((repoDetails) => {
     const linkElement = document.getElementById("repository-" + repoName);
 
     if (linkElement) {
@@ -34,12 +36,17 @@ export default function RepositoryCard(props: RepositoryCardProperties) {
     }
   });
 
-  gitClient.getLatestCommit(repoName).then((latestCommit) => {
+  gitClient.getLatestCommit(owner, repoName).then((latestCommit) => {
     const commitLink = document.getElementById("commit-" + repoName);
 
     if (commitLink) {
       commitLink.setAttribute("href", latestCommit.html_url);
-      commitLink.innerHTML = latestCommit.commit.message;
+      const message = latestCommit.commit.message;
+      let suffix = "";
+      if (message.length > MAX_COMMIT_MSG_LEN) {
+        suffix = "...";
+      }
+      commitLink.innerHTML = message.slice(0, MAX_COMMIT_MSG_LEN) + suffix;
     }
 
     const committer = document.getElementById("committer-" + repoName);
@@ -88,7 +95,7 @@ export default function RepositoryCard(props: RepositoryCardProperties) {
               <ListItemText>
               <Grid container>
                 <Grid>
-                  <GitHubIcon />&nbsp;
+                  <AccountCircleIcon />&nbsp;
                 </Grid>
                 <Grid>
                   <Link id={"committer-" + repoName} href="#" underline="hover" target="blank">
