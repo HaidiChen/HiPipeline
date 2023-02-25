@@ -1,26 +1,34 @@
 import { Octokit } from "octokit";
 
 
+const GIT_REPOS_OWNER = "haidichen";
+
 const octokit = new Octokit({
   auth: process.env.REACT_APP_GIT_ACCESS_TOKEN,
 });
 
-export default class GitClient {
+class GitClient {
 
-  async getRepositoryDetails(owner: string, repoName: string) {
+  async listOwnedPublicRepositories() {
+      const response = await octokit.request("GET /users/{owner}/repos", {
+        owner: GIT_REPOS_OWNER,
+      });
 
+      return response.data;
+  }
+
+  async getRepositoryDetails(repoName: string) {
       const response = await octokit.request("GET /repos/{owner}/{repo}", {
-        owner: owner,
+        owner: GIT_REPOS_OWNER,
         repo: repoName,
       });
 
       return response.data;
   }
 
-  async getLatestCommit(owner: string, repoName: string) {
-
+  async getLatestCommit(repoName: string) {
       const response = await octokit.request("GET /repos/{owner}/{repo}/commits", {
-        owner: owner,
+        owner: GIT_REPOS_OWNER,
         repo: repoName,
       });
 
@@ -28,3 +36,5 @@ export default class GitClient {
   }
 
 }
+
+export const GIT_CLIENT = new GitClient();

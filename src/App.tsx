@@ -2,17 +2,14 @@ import * as React from 'react';
 import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
-import Container from '@mui/material/Container';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
-import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Unstable_Grid2';
-import Tooltip from '@mui/material/Tooltip';
 
 import NavigationBar from './NavigationBar';
-import RepositoryCard from './RepositoryCard';
+import RepositoryStack from './RepositoryStack';
 
 
 export default function App() {
@@ -23,12 +20,7 @@ export default function App() {
 
       <Grid container sx={{ marginLeft: 3 }} spacing={4}>
         <Grid>
-          <Stack spacing={1}>
-            <RepositoryCard repositoryName="SimpleTicTacToe" owner="haidichen" />
-            <RepositoryCard repositoryName="HiPipeline" owner="haidichen"/>
-            <RepositoryCard repositoryName="Extractor" owner="haidichen"/>
-            <RepositoryCard repositoryName="Payroll" owner="haidichen"/>
-          </Stack>
+          <RepositoryStack />
         </Grid>
 
         <Grid>

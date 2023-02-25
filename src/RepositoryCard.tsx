@@ -1,3 +1,5 @@
+import { useState, useEffect } from "react";
+
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import Card from '@mui/material/Card';
@@ -10,66 +12,68 @@ import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import Typography from '@mui/material/Typography';
 
-import GitClient from './GitClient';
+import { GIT_CLIENT } from './GitClient';
 
 
 const MAX_COMMIT_MSG_LEN = 35;
 
-const gitClient = new GitClient();
-
 interface RepositoryCardProperties {
   repositoryName: string,
-  owner: string,
 }
+
+interface CommitInfoProperties {
+  repositoryUrl?: string,
+  message?: string,
+  htmlUrl?: string,
+  date?: string,
+  committer?: string,
+  committerUrl?: string,
+}
+
+const DEFAULT_COMMIT_INFO = {
+  repositoryUrl: "#",
+  message: "commit message",
+  htmlUrl: "#",
+  date: "commit date",
+  committer: "committer name",
+  committerUrl: "#",
+};
 
 export default function RepositoryCard(props: RepositoryCardProperties) {
 
   const repoName = props.repositoryName;
-  const owner = props.owner;
+  const [commitInfo, setCommitInfo] = useState<CommitInfoProperties>(DEFAULT_COMMIT_INFO);
 
-  gitClient.getRepositoryDetails(owner, repoName).then((repoDetails) => {
-    const linkElement = document.getElementById("repository-" + repoName);
+  useEffect(() => {
+    GIT_CLIENT.getRepositoryDetails(repoName).then((repoDetails) => {
+      setCommitInfo({
+        ...commitInfo,
+        repositoryUrl: repoDetails.html_url,
+      });
+    });
 
-    if (linkElement) {
-      linkElement.setAttribute("href", repoDetails.html_url);
-      linkElement.innerHTML = repoName;
-    }
-  });
+    GIT_CLIENT.getLatestCommit(repoName).then((latestCommit) => {
+      const commitMessage = latestCommit.commit.message;
+      const commitMessageSuffix = commitMessage.length > MAX_COMMIT_MSG_LEN ? "..." : "";
 
-  gitClient.getLatestCommit(owner, repoName).then((latestCommit) => {
-    const commitLink = document.getElementById("commit-" + repoName);
-
-    if (commitLink) {
-      commitLink.setAttribute("href", latestCommit.html_url);
-      const message = latestCommit.commit.message;
-      let suffix = "";
-      if (message.length > MAX_COMMIT_MSG_LEN) {
-        suffix = "...";
-      }
-      commitLink.innerHTML = message.slice(0, MAX_COMMIT_MSG_LEN) + suffix;
-    }
-
-    const committer = document.getElementById("committer-" + repoName);
-
-    if (committer && latestCommit.committer) {
-      committer.setAttribute("href", latestCommit.committer.html_url);
-      committer.innerHTML = latestCommit.committer.login;
-    }
-
-    const commitDate = document.getElementById("date-" + repoName);
-
-    if (commitDate && latestCommit.commit.committer) {
-      commitDate.innerHTML = "" + latestCommit.commit.committer.date;
-    }
-  });
+      setCommitInfo({
+        ...commitInfo,
+        htmlUrl: latestCommit.html_url,
+        message: commitMessage.slice(0, MAX_COMMIT_MSG_LEN) + commitMessageSuffix,
+        committerUrl: latestCommit.committer ? latestCommit.committer.html_url : "#",
+        committer: latestCommit.committer ? latestCommit.committer.login : "committer name",
+        date: latestCommit.commit.committer ? latestCommit.commit.committer.date : "commit date",
+      });
+    });
+  }, [repoName]);
 
   return (
       <Card sx={{ minWidth: 240, background: "#e1f5fe" }}>
         <CardContent>
 
           <Typography variant="h5">
-            <Link id={"repository-" + repoName} href="#" underline="hover" target="blank">
-              repository-name
+            <Link href={commitInfo.repositoryUrl} underline="hover" target="blank">
+              {repoName}
             </Link>
           </Typography>
 
@@ -83,8 +87,8 @@ export default function RepositoryCard(props: RepositoryCardProperties) {
                     <CommitIcon />&nbsp;
                   </Grid>
                   <Grid>
-                    <Link id={"commit-" + repoName} href="#" underline="hover" target="blank">
-                      commit-id
+                    <Link href={commitInfo.htmlUrl} underline="hover" target="blank">
+                      {commitInfo.message}
                     </Link>
                   </Grid>
                 </Grid>
@@ -98,8 +102,8 @@ export default function RepositoryCard(props: RepositoryCardProperties) {
                   <AccountCircleIcon />&nbsp;
                 </Grid>
                 <Grid>
-                  <Link id={"committer-" + repoName} href="#" underline="hover" target="blank">
-                    committer
+                  <Link href={commitInfo.committerUrl} underline="hover" target="blank">
+                    {commitInfo.committer}
                   </Link>
                 </Grid>
               </Grid>
@@ -113,8 +117,8 @@ export default function RepositoryCard(props: RepositoryCardProperties) {
                     <CalendarMonthIcon  />&nbsp;
                   </Grid>
                   <Grid>
-                    <Typography variant="caption" id={"date-" + repoName}>
-                      datetime : 3 min ago
+                    <Typography variant="caption">
+                      {commitInfo.date}
                     </Typography>
                   </Grid>
                 </Grid>
