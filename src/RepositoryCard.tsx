@@ -45,23 +45,18 @@ export default function RepositoryCard(props: RepositoryCardProperties) {
   const [commitInfo, setCommitInfo] = useState<CommitInfoProperties>(DEFAULT_COMMIT_INFO);
 
   useEffect(() => {
-    GIT_CLIENT.getRepositoryDetails(repoName).then((repoDetails) => {
-      setCommitInfo({
-        ...commitInfo,
-        repositoryUrl: repoDetails.html_url,
-      });
-    });
-
     GIT_CLIENT.getLatestCommit(repoName).then((latestCommit) => {
       const commitMessage = latestCommit.commit.message;
       const commitMessageSuffix = commitMessage.length > MAX_COMMIT_MSG_LEN ? "..." : "";
+      const commitUrl = latestCommit.html_url;
+      const committerDetail = latestCommit.committer;
 
       setCommitInfo({
-        ...commitInfo,
-        htmlUrl: latestCommit.html_url,
+        repositoryUrl: commitUrl.slice(0, commitUrl.indexOf('/commit/')),
+        htmlUrl: commitUrl,
         message: commitMessage.slice(0, MAX_COMMIT_MSG_LEN) + commitMessageSuffix,
-        committerUrl: latestCommit.committer ? latestCommit.committer.html_url : "#",
-        committer: latestCommit.committer ? latestCommit.committer.login : "committer name",
+        committerUrl: committerDetail ? committerDetail.html_url : "#",
+        committer: committerDetail ? committerDetail.login : "committer name",
         date: latestCommit.commit.committer ? latestCommit.commit.committer.date : "commit date",
       });
     });
