@@ -12,14 +12,10 @@ import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import Typography from '@mui/material/Typography';
 
-import { GIT_CLIENT } from './GitClient';
+import { GIT_CLIENT } from '../git/GitClient';
 
 
 const MAX_COMMIT_MSG_LEN = 35;
-
-interface RepositoryCardProperties {
-  repositoryName: string,
-}
 
 interface CommitInfoProperties {
   repositoryUrl?: string,
@@ -38,6 +34,10 @@ const DEFAULT_COMMIT_INFO = {
   committer: "committer name",
   committerUrl: "#",
 };
+
+interface RepositoryCardProperties {
+  repositoryName: string,
+}
 
 export default function RepositoryCard(props: RepositoryCardProperties) {
 

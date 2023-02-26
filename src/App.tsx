@@ -1,26 +1,34 @@
-import * as React from 'react';
+import { useState } from "react";
+
 import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
+import Grid from '@mui/material/Unstable_Grid2';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import Typography from '@mui/material/Typography';
-import Grid from '@mui/material/Unstable_Grid2';
 
 import NavigationBar from './NavigationBar';
-import RepositoryStack from './RepositoryStack';
+import RepositorySelect from './repository/RepositorySelect';
+import RepositoryStack from './repository/RepositoryStack';
 
 
 export default function App() {
+
+  const [repositoryNames, setRepositoryNames] = useState<string[]>([]);
 
   return (
     <>
       <NavigationBar headline="Haidi Chen's Git Actions Workflows" />
 
       <Grid container sx={{ marginLeft: 3 }} spacing={4}>
+        <Grid xs={12}>
+          <RepositorySelect onSelect={setRepositoryNames} />
+        </Grid>
+
         <Grid>
-          <RepositoryStack />
+          <RepositoryStack repositoryNames={repositoryNames} />
         </Grid>
 
         <Grid>
