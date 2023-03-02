@@ -1,5 +1,6 @@
 import { useState } from "react";
 
+import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
@@ -9,9 +10,9 @@ import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import Typography from '@mui/material/Typography';
 
-import NavigationBar from './NavigationBar';
-import RepositorySelect from './repository/RepositorySelect';
-import RepositoryStack from './repository/RepositoryStack';
+import NavigationBar from './components/NavigationBar';
+import RepositorySelect from './components/repository/RepositorySelect';
+import RepositoryStack from './components/repository/RepositoryStack';
 
 
 export default function App() {
@@ -32,34 +33,29 @@ export default function App() {
         </Grid>
 
         <Grid>
-          <Button variant="outlined">
-            <Typography sx={{ p: 2 }}>Auto build status : on
-            </Typography>
-          </Button>
-        </Grid>
 
-        <Grid>
-          <Card sx={{ minWidth: 240, background: "#e0ffff" }}>
-            <CardContent>
-              <Typography variant="h5">Build</Typography>
-              <hr />
-              <List disablePadding>
-                <ListItem disablePadding>
-                  <ListItemText>
-                    status :
-                    <Button size="small" color="success">
-                      succeeded
-                    </Button>
-                  </ListItemText>
-                </ListItem>
-                <ListItem disablePadding>
-                  <ListItemText>
-                    datetime : 3 min ago
-                  </ListItemText>
-                </ListItem>
-              </List>
-            </CardContent>
-          </Card>
+            <Card sx={{ minWidth: 240, background: "#e0ffff" }}>
+              <CardContent>
+                <Typography variant="h5">Workflow Definitions</Typography>
+                <hr />
+                <List disablePadding>
+                  <ListItem disablePadding>
+                    <ListItemText>
+                      status :
+                      <Button size="small" color="success">
+                        succeeded
+                      </Button>
+                    </ListItemText>
+                  </ListItem>
+                  <ListItem disablePadding>
+                    <ListItemText>
+                      datetime : 3 min ago
+                    </ListItemText>
+                  </ListItem>
+                </List>
+              </CardContent>
+            </Card>
+
         </Grid>
       </Grid>
     </>

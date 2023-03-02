@@ -3,7 +3,7 @@ import { useState, useEffect} from "react";
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 
-import { GIT_CLIENT } from '../git/GitClient';
+import { GIT_CLIENT } from '../../git/GitClient';
 
 
 interface RepositorySelectProperties {
