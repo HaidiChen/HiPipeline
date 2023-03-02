@@ -18,7 +18,7 @@ import Typography from '@mui/material/Typography';
 import { GIT_CLIENT } from '../../git/GitClient';
 
 
-const MAX_COMMIT_MSG_LEN = 32;
+const MAX_COMMIT_MSG_LEN = 30;
 
 interface CommitInfoProperties {
   repositoryUrl?: string,
