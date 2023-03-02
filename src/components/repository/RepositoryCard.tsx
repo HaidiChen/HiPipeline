@@ -1,19 +1,18 @@
 import { useState, useEffect } from "react";
 
-import Tooltip from '@mui/material/Tooltip';
-import IconButton from '@mui/material/IconButton';
-import DoubleArrowIcon from '@mui/icons-material/DoubleArrow';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import Button from '@mui/material/Button';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CommitIcon from '@mui/icons-material/Commit';
+import DoubleArrowIcon from '@mui/icons-material/DoubleArrow';
 import Grid from '@mui/material/Grid';
+import IconButton from '@mui/material/IconButton';
 import Link from '@mui/material/Link';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
+import Tooltip from '@mui/material/Tooltip';
 import Typography from '@mui/material/Typography';
 
 import { GIT_CLIENT } from '../../git/GitClient';
