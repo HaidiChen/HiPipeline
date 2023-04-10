@@ -35,6 +35,28 @@ class GitClient {
       return response.data[0];
   }
 
+  async listRepositoryWorkflows(repoName: string) {
+      const response = await octokit.request("GET /repos/{owner}/{repo}/actions/workflows", {
+        owner: GIT_REPOS_OWNER,
+        repo: repoName,
+      });
+
+      return response.data.workflows;
+  }
+
+  async getWorkflowDefinition(repoName: string, workflowId: number) {
+      const response = await octokit.request(
+        "GET /repos/{owner}/{repo}/actions/workflows/{workflows_id}",
+        {
+          owner: GIT_REPOS_OWNER,
+          repo: repoName,
+          workflows_id: workflowId,
+        }
+      );
+
+      return response.data;
+  }
+
 }
 
 export const GIT_CLIENT = new GitClient();

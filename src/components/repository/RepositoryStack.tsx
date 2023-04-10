@@ -5,13 +5,14 @@ import RepositoryCard from './RepositoryCard';
 
 interface RepositoryStackProperties {
   repositoryNames: string[],
+  onSelect: any,
 }
 
 export default function RepositoryStack(props: RepositoryStackProperties) {
 
   const renderedRepositoryStack = props.repositoryNames.map((repoName: string) => {
     return (
-      <RepositoryCard repositoryName={repoName} />
+      <RepositoryCard repositoryName={repoName} onSelect={props.onSelect} />
     );
   });
 

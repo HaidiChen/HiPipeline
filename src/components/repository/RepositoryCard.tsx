@@ -40,6 +40,7 @@ const DEFAULT_COMMIT_INFO = {
 
 interface RepositoryCardProperties {
   repositoryName: string,
+  onSelect: any,
 }
 
 export default function RepositoryCard(props: RepositoryCardProperties) {
@@ -72,7 +73,7 @@ export default function RepositoryCard(props: RepositoryCardProperties) {
             <List disablePadding>
               <ListItem disablePadding secondaryAction={
                   <Tooltip title="See Workflows">
-                    <IconButton edge="end">
+                    <IconButton edge="end" onClick={() => {props.onSelect(repoName)}} >
                       <DoubleArrowIcon sx={{ color: "green"}}/>
                     </IconButton>
                   </Tooltip>
